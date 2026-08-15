@@ -1,5 +1,4 @@
 .env
-.env
 target/
 dist/
 node_modules/
