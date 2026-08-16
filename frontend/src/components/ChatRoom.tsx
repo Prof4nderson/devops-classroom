@@ -384,25 +384,38 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((msg, idx) => {
-            // Garante captura do ID independentemente do formato do JSON de retorno
+            // ID de quem enviou a mensagem (busca em todas as variações possíveis)
             const autorId =
               msg.usuarioId ??
               (msg as any).usuario?.id ??
               (msg as any).usuario_id ??
               (msg as any).userId;
 
+            // ID do usuário atualmente logado na tela (Professor ou Aluno)
+            const currentUserId =
+              user?.id ??
+              (user as any)?.usuarioId ??
+              (user as any)?.idUsuario;
+
+            // Nome do autor
             const autorNome =
               msg.usuarioNome ||
               (msg as any).nomeUsuario ||
               (msg as any).nome ||
               (msg as any).usuario?.nome ||
-              presentes[autorId] ||
+              (autorId ? presentes[autorId] : null) ||
               'Usuário';
 
-            const autorTipo = msg.usuarioTipo || (msg as any).tipoUsuario || (msg as any).usuario?.tipo;
-            
-            // Valida se o ID existe e compara convertendo para String
-            const ehMinha = Boolean(autorId) && String(autorId) === String(user.id);
+            const autorTipo =
+              msg.usuarioTipo ||
+              (msg as any).tipoUsuario ||
+              (msg as any).usuario?.tipo;
+
+            // Comparação blindada contra diferenças de tipo ou chave
+            const ehMinha =
+              autorId !== undefined &&
+              currentUserId !== undefined &&
+              String(autorId) === String(currentUserId);
 
             return (
               <div
@@ -444,7 +457,6 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
             );
           })}
 
-          
           {/* Indicador de Digitação da IA */}
           {isAiThinking && (
             <div className="flex justify-start">
