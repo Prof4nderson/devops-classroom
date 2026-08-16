@@ -395,7 +395,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
               'Usuário';
 
             const autorTipo = msg.usuarioTipo || (msg as any).tipoUsuario;
-            const ehMinha = autorId === user.id;
+            const ehMinha = String(autorId) === String(user.id);
 
             return (
               <div
