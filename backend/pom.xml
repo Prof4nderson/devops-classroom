@@ -77,6 +77,11 @@
             <artifactId>langchain4j-embeddings-all-minilm-l6-v2-q</artifactId>
             <version>${langchain4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-pgvector</artifactId>
+            <version>${langchain4j.version}</version> <!-- Utilize a mesma versão das demais libs do LangChain4j no seu pom -->
+        </dependency>
 
         <!-- Bancos de Dados -->
         <dependency>
