@@ -2,6 +2,8 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: devops-classroom-postgres
+    ports:
+      - "127.0.0.1:5432:5432"
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME:-devops_classroom}
