@@ -41,7 +41,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
       lista.forEach((u: any) => {
         if (u && typeof u === 'object') {
           const id = u.id || u.usuarioId;
-          const nome = u.nome || u.usuarioNome || u.nomeUsuario;
+          const nome = u.nome || u.usuarioNome || u.nomeUsuario || u.userName;
           if (id && nome) mapa[id] = nome;
         }
       });
@@ -49,7 +49,11 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
       Object.entries(lista).forEach(([key, val]) => {
         if (typeof val === 'string') mapa[Number(key)] = val;
         else if (val && typeof val === 'object') {
-          mapa[Number(key)] = (val as any).nome || (val as any).usuarioNome || `Usuário ${key}`;
+          mapa[Number(key)] =
+            (val as any).nome ||
+            (val as any).usuarioNome ||
+            (val as any).nomeUsuario ||
+            `Usuário ${key}`;
         }
       });
     }
@@ -69,8 +73,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
     } finally {
       wsRef.current?.leave();
       toast.success('Você saiu da aula');
-      
-      onLeave(); // 👈 Notifica o componente pai para voltar ao Dashboard
+      onLeave();
     }
   };
 
@@ -382,8 +385,16 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ aula, user, onLeave }) => {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((msg, idx) => {
             const autorId = msg.usuarioId;
-            const autorNome = msg.usuarioNome || 'Usuário';
-            const autorTipo = msg.usuarioTipo;
+
+            const autorNome =
+              msg.usuarioNome ||
+              (msg as any).nomeUsuario ||
+              (msg as any).nome ||
+              (msg as any).usuario?.nome ||
+              presentes[autorId] ||
+              'Usuário';
+
+            const autorTipo = msg.usuarioTipo || (msg as any).tipoUsuario;
             const ehMinha = autorId === user.id;
 
             return (
