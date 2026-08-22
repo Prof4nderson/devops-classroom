@@ -59,7 +59,7 @@ services:
       - app-net
 
   frontend:
-    build: ./frontend
+    build: ./app-frontend
     container_name: devops-frontend
     environment:
       NODE_ENV: production
