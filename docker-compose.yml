@@ -32,9 +32,8 @@ services:
   backend:
     build: ./backend
     container_name: devops-backend
-    dockerfile: Dockerfile
     ports:
-      - "8083:8081"
+      - "8083:8080"
     restart: unless-stopped
    # expose:
     #  - "8080"
