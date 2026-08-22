@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: devops-dev-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: devops_classroom
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: devops-dev-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_dev_data:/root/.ollama
+
+volumes:
+  postgres_dev_data:
+  ollama_dev_data:

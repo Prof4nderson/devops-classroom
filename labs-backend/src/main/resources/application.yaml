@@ -1,0 +1,30 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ai_db
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update # <--- Garante que o Hibernate crie a tabela automaticamente
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: false # Recomendado desativar temporariamente enquanto usa o ddl-auto=update para evitar conflitos
+
+jwt:
+  secret: "sua_chave_secreta_super_segura_com_tamanho_adequado_para_hs256"
+  expiration: 86400000
+
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: ${OPENAI_API_KEY:demo}
+      model-name: gpt-4o-mini
