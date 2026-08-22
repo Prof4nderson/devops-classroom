@@ -60,7 +60,6 @@ services:
 
   frontend:
     build: ./frontend
-    dockerfile: Dockerfile
     container_name: devops-frontend
     environment:
       NODE_ENV: production
