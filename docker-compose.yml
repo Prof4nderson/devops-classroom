@@ -2,8 +2,8 @@ services:
   postgres:
     image: pgvector/pgvector:pg16
     container_name: devops_postgres
-   # ports:
-   #   - "127.0.0.1:5432:5432"
+    ports:
+      - "127.0.0.1:5432:5432"
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME}
